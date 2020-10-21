@@ -1,11 +1,12 @@
 from tkinter import *
+import math
 #simple calculator
 
 
 # Top level widget which is the main window of an application.
 root = Tk()
 # adds title of the application
-root.title('Simple calculator')
+root.title('Better calculator')
 
 #widget used to enter or display single line of text
 e = Entry(root,width =35,borderwidth=5)
@@ -35,11 +36,29 @@ def button_equal():
     if math == 'division':
         e.insert(0,f_num/int(second_number))
 
+
+#adding values or result to memory
 def add_to_mem():
     memory.append(e.get())
+    e.delete(0,END)
+
 
 def mem_view():
-    e.insert(0,memory[0])
+    position = int(e.get())
+    e.delete(0,END)
+    if position == 1:
+        e.insert(0,memory[position-1])
+        Message(root,text='Saved on 1 position',anchor=CENTER)
+    if position == 2:
+        e.insert(0,memory[position-1])
+        Message(root,text='Saved on 2 position',anchor=CENTER)
+    if position == 3:
+        e.insert(0,memory[position-1])
+        Message(root,text='Saved on 3 position',anchor=CENTER)
+    if position == 4:
+        e.insert(0,memory[position-1])
+        Message(root,text='Saved on 4 position',anchor=CENTER)
+
 
 def button_add():
     first_number = e.get()
@@ -69,7 +88,16 @@ def button_div():
     f_num = int(first_number)
     e.delete(0,END)
 
+def button_sqrt():
+    first_number = e.get()
+    f_num = int(first_number)
+    #important to clear Entry. Without it, calculator will return sqrt(4) = 2,04.
+    e.delete(0,END)
+    e.insert(0,f_num**0.5)
+
+
 #defining buttons with digits
+
 Button_1 = Button(root,text='1',padx=31,pady=15,command=lambda:button_click(1))
 Button_2 = Button(root,text='2',padx=32,pady=15,command=lambda:button_click(2))
 Button_3 = Button(root,text='3',padx=31,pady=15,command=lambda:button_click(3))
@@ -87,9 +115,10 @@ Button_Add = Button(root,text='+',padx=28,pady=15,command=button_add)
 Button_Sub = Button(root,text='-',padx=30,pady=15,command=button_sub)
 Button_Div = Button(root,text='/',padx=30,pady=15,command=button_div)
 Button_Mul = Button(root,text='*',padx=30,pady=15,command=button_mul)
+Button_Sqrt = Button(root, text='\u221A',padx=30,pady=15,command=button_sqrt)
 
 Button_Eq = Button(root,text='=',padx=70,pady=15,command=button_equal)
-Button_Cl = Button(root,text='C',padx=70,pady=15,command=button_clear)
+Button_Cl = Button(root,text='C',padx=30,pady=15,command=button_clear)
 
 Button_MAdd = Button(root,text='M+',padx=24,pady=15,command=add_to_mem)
 Button_MView = Button(root,text='MV',padx=24,pady=15,command=mem_view)
@@ -115,10 +144,10 @@ Button_Div.grid(row=3,column=3)
 Button_Mul.grid(row=4,column=3)
 
 Button_Eq.grid(row=4,column=1,columnspan=2)
-Button_Cl.grid(row=5,column=0,columnspan=2)
+Button_Cl.grid(row=5,column=0)
+Button_Sqrt.grid(row=5,column=1)
 Button_MAdd.grid(row=5,column=2)
 Button_MView.grid(row=5,column=3)
-
 
 
 
