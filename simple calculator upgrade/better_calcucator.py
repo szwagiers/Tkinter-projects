@@ -1,5 +1,7 @@
 from tkinter import *
 import math
+from tkinter import messagebox
+
 #simple calculator
 
 
@@ -10,10 +12,11 @@ root.title('Better calculator')
 
 #widget used to enter or display single line of text
 e = Entry(root,width =35,borderwidth=5)
-e.grid(row=0,column=0,columnspan=4,padx=10,pady=10)
+e.grid(row=0,column=0,columnspan=6,padx=10,pady=10)
 
 e.insert(0,"")
 memory =[]
+list = Text(root,height=4,width=20)
 
 def button_click(number):
     #e.delete(0,END)
@@ -27,7 +30,9 @@ def button_clear():
 def button_equal():
     second_number = e.get()
     e.delete(0,END)
-    if math == 'addition':
+    if math == 'addition' and isinstance(f_num, float):
+        e.insert(0,f_num+float(second_number))
+    else:
         e.insert(0,f_num+int(second_number))
     if math == 'subtraction':
         e.insert(0,f_num-int(second_number))
@@ -36,64 +41,88 @@ def button_equal():
     if math == 'division':
         e.insert(0,f_num/int(second_number))
 
-
+index = 0
 #adding values or result to memory
 def add_to_mem():
-    memory.append(e.get())
-    e.delete(0,END)
+    global index
+    index += 1
+    if index <= 4:
+        memory.append(e.get())
+        #important note : insert widget accepts only strings
+        # insert saved result in the textbox with index number
+        list.insert(INSERT,str(index)+')'+ e.get() + '\n')
+        e.delete(0,END)
+    #if there are 4 positions in memory popup warning message
+    else:
+        messagebox.showinfo("WARNING", "Out of memory")
 
-
+#put result from memory in your calculator window by chosing index number and clicking MV button
 def mem_view():
     position = int(e.get())
     e.delete(0,END)
     if position == 1:
-        e.insert(0,memory[position-1])
-        Message(root,text='Saved on 1 position',anchor=CENTER)
+        if isinstance(memory[position-1],float):
+            e.insert(0,float(memory[position-1]))
+        else:
+            e.insert(0,memory[position-1])
     if position == 2:
-        e.insert(0,memory[position-1])
-        Message(root,text='Saved on 2 position',anchor=CENTER)
+        if isinstance(memory[position-1],float):
+            e.insert(0,float(memory[position-1]))
+        else:
+            e.insert(0,memory[position-1])
     if position == 3:
-        e.insert(0,memory[position-1])
-        Message(root,text='Saved on 3 position',anchor=CENTER)
+        if isinstance(memory[position-1],float):
+            e.insert(0,float(memory[position-1]))
+        else:
+            e.insert(0,memory[position-1])
     if position == 4:
-        e.insert(0,memory[position-1])
-        Message(root,text='Saved on 4 position',anchor=CENTER)
+        if isinstance(memory[position-1],float):
+            e.insert(0,float(memory[position-1]))
+        else:
+            e.insert(0,memory[position-1])
 
+def int_or_flo(number):
+    if '.' in number:
+        num = float(number)
+    else:
+        num = int(number)
+    return num
 
 def button_add():
     first_number = e.get()
     global f_num,math
     math = 'addition'
-    f_num = int(first_number)
+    f_num = int_or_flo(first_number)
     e.delete(0,END)
 
 def button_sub():
     first_number = e.get()
     global f_num,math
     math = 'subtraction'
-    f_num = int(first_number)
+    f_num = int_or_flo(first_number)
     e.delete(0,END)
 
 def button_mul():
     first_number = e.get()
     global f_num,math
     math = 'multiplication'
-    f_num = int(first_number)
+    f_num = int_or_flo(first_number)
     e.delete(0,END)
 
 def button_div():
     first_number = e.get()
     global f_num,math
     math = 'division'
-    f_num = int(first_number)
+    f_num = int_or_flo(first_number)
     e.delete(0,END)
 
+#squareroot of number
 def button_sqrt():
     first_number = e.get()
-    f_num = int(first_number)
+    f_num = int_or_flo(first_number)
     #important to clear Entry. Without it, calculator will return sqrt(4) = 2,04.
     e.delete(0,END)
-    e.insert(0,f_num**0.5)
+    e.insert(0,math.sqrt(f_num))
 
 
 #defining buttons with digits
@@ -142,12 +171,14 @@ Button_Add.grid(row=1,column=3)
 Button_Sub.grid(row=2,column=3)
 Button_Div.grid(row=3,column=3)
 Button_Mul.grid(row=4,column=3)
-
+#mathematical operations
 Button_Eq.grid(row=4,column=1,columnspan=2)
 Button_Cl.grid(row=5,column=0)
 Button_Sqrt.grid(row=5,column=1)
 Button_MAdd.grid(row=5,column=2)
 Button_MView.grid(row=5,column=3)
+#put boxwindow on the screen
+list.grid(row=1,column=5)
 
 
 
