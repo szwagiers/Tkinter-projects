@@ -7,16 +7,16 @@ from tkinter import messagebox
 
 # Top level widget which is the main window of an application.
 root = Tk()
-# adds title of the application
+# adds title of the application and icon
 root.title('Better calculator')
+root.iconbitmap('D:/ikony/calc.ico')
 
 #widget used to enter or display single line of text
 e = Entry(root,width =35,borderwidth=5)
 e.grid(row=0,column=0,columnspan=6,padx=10,pady=10)
 
 e.insert(0,"")
-memory =[]
-list = Text(root,height=4,width=20)
+
 
 def button_click(number):
     #e.delete(0,END)
@@ -127,26 +127,26 @@ def button_sqrt():
 
 #defining buttons with digits
 
-Button_1 = Button(root,text='1',padx=31,pady=15,command=lambda:button_click(1))
-Button_2 = Button(root,text='2',padx=32,pady=15,command=lambda:button_click(2))
-Button_3 = Button(root,text='3',padx=31,pady=15,command=lambda:button_click(3))
+Button_1 = Button(root,text='1',padx=31,pady=16,command=lambda:button_click(1))
+Button_2 = Button(root,text='2',padx=32,pady=16,command=lambda:button_click(2))
+Button_3 = Button(root,text='3',padx=31,pady=16,command=lambda:button_click(3))
 
-Button_4 = Button(root,text='4',padx=31,pady=15,command=lambda:button_click(4))
-Button_5 = Button(root,text='5',padx=32,pady=15,command=lambda:button_click(5))
-Button_6 = Button(root,text='6',padx=31,pady=15,command=lambda:button_click(6))
+Button_4 = Button(root,text='4',padx=31,pady=16,command=lambda:button_click(4))
+Button_5 = Button(root,text='5',padx=32,pady=16,command=lambda:button_click(5))
+Button_6 = Button(root,text='6',padx=31,pady=16,command=lambda:button_click(6))
 
-Button_7 = Button(root,text='7',padx=31,pady=15,command=lambda:button_click(7))
-Button_8 = Button(root,text='8',padx=32,pady=15,command=lambda:button_click(8))
-Button_9 = Button(root,text='9',padx=31,pady=15,command=lambda:button_click(9))
+Button_7 = Button(root,text='7',padx=31,pady=16,command=lambda:button_click(7))
+Button_8 = Button(root,text='8',padx=32,pady=16,command=lambda:button_click(8))
+Button_9 = Button(root,text='9',padx=31,pady=16,command=lambda:button_click(9))
 
-Button_0 = Button(root,text='0',padx=31,pady=15,command=lambda:button_click(0))
-Button_Add = Button(root,text='+',padx=28,pady=15,command=button_add)
-Button_Sub = Button(root,text='-',padx=30,pady=15,command=button_sub)
-Button_Div = Button(root,text='/',padx=30,pady=15,command=button_div)
-Button_Mul = Button(root,text='*',padx=30,pady=15,command=button_mul)
-Button_Sqrt = Button(root, text='\u221A',padx=30,pady=15,command=button_sqrt)
+Button_0 = Button(root,text='0',padx=31,pady=16,command=lambda:button_click(0))
+Button_Add = Button(root,text='+',padx=28,pady=16,command=button_add)
+Button_Sub = Button(root,text='-',padx=30,pady=16,command=button_sub)
+Button_Div = Button(root,text='/',padx=30,pady=16,command=button_div)
+Button_Mul = Button(root,text='*',padx=30,pady=16,command=button_mul)
+Button_Sqrt = Button(root, text='\u221A',padx=29,pady=15,command=button_sqrt)
 
-Button_Eq = Button(root,text='=',padx=70,pady=15,command=button_equal)
+Button_Eq = Button(root,text='=',padx=69,pady=16,command=button_equal)
 Button_Cl = Button(root,text='C',padx=30,pady=15,command=button_clear)
 
 Button_MAdd = Button(root,text='M+',padx=24,pady=15,command=add_to_mem)
@@ -167,20 +167,26 @@ Button_9.grid(row=1,column=2)
 
 Button_0.grid(row=4,column=0)
 
-Button_Add.grid(row=1,column=3)
-Button_Sub.grid(row=2,column=3)
-Button_Div.grid(row=3,column=3)
-Button_Mul.grid(row=4,column=3)
+Button_Div.grid(row=1,column=3)
+Button_Mul.grid(row=2,column=3)
+Button_Sub.grid(row=3,column=3)
+Button_Add.grid(row=4,column=3)
+
 #mathematical operations
 Button_Eq.grid(row=4,column=1,columnspan=2)
 Button_Cl.grid(row=5,column=0)
-Button_Sqrt.grid(row=5,column=1)
+Button_Sqrt.grid(row=5,column=3)
 Button_MAdd.grid(row=5,column=2)
-Button_MView.grid(row=5,column=3)
-#put boxwindow on the screen
-list.grid(row=1,column=5)
+Button_MView.grid(row=5,column=1)
 
+#frame where memory content will be shown
+memory_frame = LabelFrame(root, text ='Memory', padx =10 , pady=12)
+memory_frame.grid(row=1,column=5,rowspan=2)
 
+# list where results are stored
+memory =[]
+list = Text(memory_frame,height=4,width=20)
+list.grid(row=2,column=5)
 
 
 
